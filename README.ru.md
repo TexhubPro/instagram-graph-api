@@ -264,6 +264,27 @@ public function handle(Request $request) {
 
 ---
 
+## 🏢 Multi-tenant / SaaS
+
+Много клиентов могут подключить **свои** аккаунты Instagram через одно приложение Meta. Каждый арендатор проходит OAuth и получает свой долгоживущий токен; один webhook-URL обслуживает всех.
+
+```php
+// Онбординг: каждый арендатор проходит OAuth → сохраняете его long-lived токен.
+$long = $ig->oauth()->exchangeForLongLivedToken($short->token);
+// → сохраните {token, user_id} для этого арендатора
+
+// Действуем от любого арендатора — клиент с его сохранённым токеном:
+$ig->withAccessToken($tenant->ig_token)->media()->publishPhoto($url, $caption);
+
+// Один вебхук на всех — роутинг по аккаунту-получателю:
+foreach ($ig->webhooks()->parse($raw) as $event) {
+    $tenant = Tenant::where('ig_account_id', $event->accountId())->first();
+    if ($event->isMessage()) { /* $event->senderId(), $event->messageText() */ }
+}
+```
+
+`$event->accountId()` (подключённый аккаунт / `entry.id`) и `$event->recipientId()` — ключи маршрутизации по арендатору. Подпись проверяется одним общим app secret.
+
 ## 🧪 Тестирование
 
 ```php

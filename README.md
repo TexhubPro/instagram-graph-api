@@ -264,6 +264,27 @@ public function handle(Request $request) {
 
 ---
 
+## 🏢 Multi-tenant / SaaS
+
+Many customers can connect **their own** Instagram accounts through one Meta app. Each tenant authorizes via OAuth and gets their own long-lived token; one webhook URL serves everyone.
+
+```php
+// Onboarding: each tenant runs the OAuth flow → store their long-lived token.
+$long = $ig->oauth()->exchangeForLongLivedToken($short->token);
+// → save {token, user_id} for this tenant
+
+// Act as any tenant — bind a client to their stored token:
+$ig->withAccessToken($tenant->ig_token)->media()->publishPhoto($url, $caption);
+
+// One webhook for everyone — route by the account that received it:
+foreach ($ig->webhooks()->parse($raw) as $event) {
+    $tenant = Tenant::where('ig_account_id', $event->accountId())->first();
+    if ($event->isMessage()) { /* $event->senderId(), $event->messageText() */ }
+}
+```
+
+`$event->accountId()` (the connected account / `entry.id`) and `$event->recipientId()` are the tenant routing keys. Signatures are verified with your single app secret.
+
 ## 🧪 Testing
 
 ```php

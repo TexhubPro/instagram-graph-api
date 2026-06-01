@@ -95,6 +95,8 @@ final class WebhookHandler
                 continue;
             }
 
+            $accountId = isset($entry['id']) ? (string) $entry['id'] : null;
+
             // Field changes (comments, mentions, …)
             foreach (($entry['changes'] ?? []) as $change) {
                 if (is_array($change)) {
@@ -102,6 +104,7 @@ final class WebhookHandler
                         type: (string) ($change['field'] ?? 'unknown'),
                         value: is_array($change['value'] ?? null) ? $change['value'] : [],
                         raw: $change,
+                        accountId: $accountId,
                     );
                 }
             }
@@ -116,6 +119,7 @@ final class WebhookHandler
                         type: $type,
                         value: $messaging,
                         raw: $messaging,
+                        accountId: $accountId,
                     );
                 }
             }
