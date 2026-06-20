@@ -1,6 +1,6 @@
 # TexHub · Instagram Graph API
 
-**🌐 English** · [Русский](README.ru.md)
+**English** · [Русский](README.ru.md)
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![PHP](https://img.shields.io/badge/php-%5E8.2-777bb4.svg)](composer.json)
@@ -14,7 +14,7 @@ Reference: <https://developers.facebook.com/docs/instagram-platform>
 
 ---
 
-## ✨ What's covered
+## What's covered
 
 | Area | Methods |
 |------|---------|
@@ -28,7 +28,7 @@ Reference: <https://developers.facebook.com/docs/instagram-platform>
 
 ---
 
-## 📦 Installation
+## Installation
 
 ```bash
 composer require texhub/instagram-graph-api
@@ -38,7 +38,7 @@ Requirements: **PHP ≥ 8.2** with `curl`, `json` and `hash`.
 
 ---
 
-## 🔌 1. Connect (OAuth & tokens)
+## 1. Connect (OAuth & tokens)
 
 ```php
 use TexHub\InstagramGraphApi\Instagram;
@@ -76,7 +76,7 @@ $ig = $ig->withAccessToken($long->token);
 
 ---
 
-## 👤 2. User info & avatar
+## 2. User info & avatar
 
 ```php
 $me = $ig->users()->me();
@@ -89,7 +89,7 @@ $ig->users()->username();
 
 ---
 
-## 📸 3. Publish content
+## 3. Publish content
 
 ```php
 // Photo (create container + publish in one call):
@@ -117,7 +117,7 @@ $ig->media()->publishingLimit();   // daily quota usage
 
 ---
 
-## 💬 4. Comments
+## 4. Comments
 
 ```php
 $ig->comments()->forMedia($mediaId);             // list comments
@@ -129,7 +129,7 @@ $ig->comments()->delete($commentId);
 
 ---
 
-## 📨 5. Direct messaging (with buttons)
+## 5. Direct messaging (with buttons)
 
 The recipient id is the **IGSID** you receive in messaging webhooks.
 
@@ -162,7 +162,7 @@ $ig->messages()->messages($conversationId);
 
 ---
 
-## 🔔 6. Webhooks
+## 6. Webhooks
 
 **Verification (GET)** — echo the challenge:
 
@@ -190,7 +190,7 @@ http_response_code(200);
 
 ---
 
-## 🧯 Error handling
+## Error handling
 
 ```php
 use TexHub\InstagramGraphApi\Exceptions\ApiException;
@@ -204,7 +204,7 @@ try {
 }
 ```
 
-## 🧩 Any endpoint (escape hatch)
+## Any endpoint (escape hatch)
 
 ```php
 $ig->http()->get('17841.../insights', ['metric' => 'impressions,reach']);
@@ -213,7 +213,7 @@ $ig->http()->post($mediaId, ['comment_enabled' => 'false']);
 
 ---
 
-## <a name="laravel"></a>🧩 Laravel
+## <a name="laravel"></a> Laravel
 
 Auto-discovered. Publish config:
 
@@ -264,7 +264,7 @@ public function handle(Request $request) {
 
 ---
 
-## 🏢 Multi-tenant / SaaS
+## Multi-tenant / SaaS
 
 Many customers can connect **their own** Instagram accounts through one Meta app. Each tenant authorizes via OAuth and gets their own long-lived token; one webhook URL serves everyone.
 
@@ -285,7 +285,7 @@ foreach ($ig->webhooks()->parse($raw) as $event) {
 
 `$event->accountId()` (the connected account / `entry.id`) and `$event->recipientId()` are the tenant routing keys. Signatures are verified with your single app secret.
 
-## 🧪 Testing
+## Testing
 
 ```php
 use TexHub\InstagramGraphApi\Instagram;
@@ -304,7 +304,7 @@ composer test
 
 ---
 
-## 📚 Architecture
+## Architecture
 
 ```
 src/

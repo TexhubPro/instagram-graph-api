@@ -1,6 +1,6 @@
 # TexHub · Instagram Graph API
 
-[English](README.md) · **🌐 Русский**
+[English](README.md) · **Русский**
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![PHP](https://img.shields.io/badge/php-%5E8.2-777bb4.svg)](composer.json)
@@ -14,7 +14,7 @@
 
 ---
 
-## ✨ Что покрыто
+## Что покрыто
 
 | Раздел | Методы |
 |------|---------|
@@ -28,7 +28,7 @@
 
 ---
 
-## 📦 Установка
+## Установка
 
 ```bash
 composer require texhub/instagram-graph-api
@@ -38,7 +38,7 @@ composer require texhub/instagram-graph-api
 
 ---
 
-## 🔌 1. Подключение (OAuth и токены)
+## 1. Подключение (OAuth и токены)
 
 ```php
 use TexHub\InstagramGraphApi\Instagram;
@@ -76,7 +76,7 @@ $ig = $ig->withAccessToken($long->token);
 
 ---
 
-## 👤 2. Инфо о пользователе и аватар
+## 2. Инфо о пользователе и аватар
 
 ```php
 $me = $ig->users()->me();
@@ -89,7 +89,7 @@ $ig->users()->username();
 
 ---
 
-## 📸 3. Публикация контента
+## 3. Публикация контента
 
 ```php
 // Фото (создание контейнера + публикация одним вызовом):
@@ -117,7 +117,7 @@ $ig->media()->publishingLimit();   // использование дневной 
 
 ---
 
-## 💬 4. Комментарии
+## 4. Комментарии
 
 ```php
 $ig->comments()->forMedia($mediaId);             // список комментариев
@@ -129,7 +129,7 @@ $ig->comments()->delete($commentId);
 
 ---
 
-## 📨 5. Личные сообщения (с кнопками)
+## 5. Личные сообщения (с кнопками)
 
 Id получателя — это **IGSID**, который приходит в вебхуках сообщений.
 
@@ -162,7 +162,7 @@ $ig->messages()->messages($conversationId);
 
 ---
 
-## 🔔 6. Вебхуки
+## 6. Вебхуки
 
 **Проверка (GET)** — вернуть challenge:
 
@@ -190,7 +190,7 @@ http_response_code(200);
 
 ---
 
-## 🧯 Обработка ошибок
+## Обработка ошибок
 
 ```php
 use TexHub\InstagramGraphApi\Exceptions\ApiException;
@@ -204,7 +204,7 @@ try {
 }
 ```
 
-## 🧩 Любой эндпоинт (запасной выход)
+## Любой эндпоинт (запасной выход)
 
 ```php
 $ig->http()->get('17841.../insights', ['metric' => 'impressions,reach']);
@@ -213,7 +213,7 @@ $ig->http()->post($mediaId, ['comment_enabled' => 'false']);
 
 ---
 
-## <a name="laravel"></a>🧩 Laravel
+## <a name="laravel"></a> Laravel
 
 Регистрируется автоматически. Опубликуйте конфиг:
 
@@ -264,7 +264,7 @@ public function handle(Request $request) {
 
 ---
 
-## 🏢 Multi-tenant / SaaS
+## Multi-tenant / SaaS
 
 Много клиентов могут подключить **свои** аккаунты Instagram через одно приложение Meta. Каждый арендатор проходит OAuth и получает свой долгоживущий токен; один webhook-URL обслуживает всех.
 
@@ -285,7 +285,7 @@ foreach ($ig->webhooks()->parse($raw) as $event) {
 
 `$event->accountId()` (подключённый аккаунт / `entry.id`) и `$event->recipientId()` — ключи маршрутизации по арендатору. Подпись проверяется одним общим app secret.
 
-## 🧪 Тестирование
+## Тестирование
 
 ```php
 use TexHub\InstagramGraphApi\Instagram;
@@ -304,7 +304,7 @@ composer test
 
 ---
 
-## 📚 Архитектура
+## Архитектура
 
 ```
 src/
